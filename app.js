@@ -37,3 +37,6 @@ buscador.addEventListener("input", () => {
     });
   });
 });
+database.ref("estudios").once("value", snap=>{
+   console.log("Conectado a Firebase", snap.val());
+});

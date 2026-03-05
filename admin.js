@@ -16,16 +16,42 @@ const db = getDatabase(app);
 
 const form = document.getElementById("form");
 
-form.addEventListener("submit",(e)=>{
+form.addEventListener("submit", async (e)=>{
 
 e.preventDefault();
 
 const nombre = document.getElementById("nombre").value.toUpperCase();
-const precio = document.getElementById("precio").value.toUpperCase();
-const tiempo = document.getElementById("tiempo").value.toUpperCase();
-const ayuno = document.getElementById("ayuno").value.toUpperCase();
-const preparacion = document.getElementById("preparacion").value.toUpperCase();
+const precio = document.getElementById("precio").value;
+const tiempo = document.getElementById("tiempo").value;
+const ayuno = document.getElementById("ayuno").value;
+const preparacion = document.getElementById("preparacion").value;
 const reactivo = document.getElementById("reactivo").value === "true";
+
+const estudiosRef = ref(db,"estudios");
+
+const snapshot = await get(estudiosRef);
+
+let duplicado = false;
+
+snapshot.forEach(child=>{
+
+const e = child.val();
+
+if(e.nombre === nombre){
+
+duplicado = true;
+
+}
+
+});
+
+if(duplicado){
+
+alert("⚠️ ESTE ESTUDIO YA EXISTE");
+
+return;
+
+}
 
 const id = nombre.toLowerCase().replaceAll(" ","_");
 
@@ -40,6 +66,11 @@ reactivo:reactivo
 
 });
 
+alert("✅ Estudio guardado");
+
+form.reset();
+
+});
 alert("Estudio guardado");
 
 form.reset();

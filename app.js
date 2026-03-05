@@ -1,11 +1,11 @@
-const firebaseConfig = {
-  apiKey: "PEGA_AQUI",
+const firebaseConfig = { 
+  apiKey: "AIzaSyDsBAnSCxSaYqP3NcbU41_2vUZAG-OcuCg",
   authDomain: "laboratorio-dr-luis-quito.firebaseapp.com",
   databaseURL: "https://laboratorio-dr-luis-quito-default-rtdb.firebaseio.com",
   projectId: "laboratorio-dr-luis-quito",
-  storageBucket: "laboratorio-dr-luis-quito.appspot.com",
-  messagingSenderId: "PEGA_AQUI",
-  appId: "PEGA_AQUI"
+  storageBucket: "laboratorio-dr-luis-quito.firebasestorage.app",
+  messagingSenderId: "165604879420",
+  appId: "1:165604879420:web:659121228440c0a7f26739"
 };
 
 firebase.initializeApp(firebaseConfig);

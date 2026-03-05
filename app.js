@@ -56,6 +56,9 @@ function mostrarEstudios(lista){
         '${e.ayuno}',
         '${e.preparacion}'
     )">📋 Copiar información</button>
+    <a href="https://wa.me/51942023894?text=Hola,%20quisiera%20información%20sobre%20el%20estudio%20${encodeURIComponent(e.nombre)}" target="_blank">
+<button>💬 Consultar por WhatsApp</button>
+</a>
 </div>
         `;
 

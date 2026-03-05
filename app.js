@@ -59,9 +59,16 @@ buscador.addEventListener("input", () => {
 
     const texto = buscador.value.toLowerCase();
 
-    const filtrados = estudios.filter(e =>
-        e.nombre.toLowerCase().includes(texto)
+  const filtrados = estudios.filter(e => {
+
+    const nombre = e.nombre.toLowerCase();
+
+    return (
+        nombre.includes(texto) ||
+        texto.split(" ").some(palabra => nombre.includes(palabra))
     );
+
+});
 
     mostrarEstudios(filtrados);
 

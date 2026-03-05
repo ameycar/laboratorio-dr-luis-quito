@@ -41,13 +41,21 @@ function mostrarEstudios(lista){
     lista.forEach(e => {
 
         resultados.innerHTML += `
-       <div class="card">
+      <div class="card">
     <h3>${e.nombre}</h3>
     <p class="precio">Precio: S/ ${e.precio}</p>
     <p>Entrega: ${e.tiempo_entrega}</p>
     <p>Ayuno: ${e.ayuno}</p>
     <p>Preparación: ${e.preparacion}</p>
     <p class="estado">${e.reactivo ? "🟢 Disponible" : "🔴 Sin reactivo"}</p>
+
+    <button onclick="copiarInfo(
+        '${e.nombre}',
+        '${e.precio}',
+        '${e.tiempo_entrega}',
+        '${e.ayuno}',
+        '${e.preparacion}'
+    )">📋 Copiar información</button>
 </div>
         `;
 
@@ -74,3 +82,18 @@ buscador.addEventListener("input", () => {
     mostrarEstudios(filtrados);
 
 });
+window.copiarInfo = function(nombre, precio, entrega, ayuno, preparacion){
+
+const texto = `
+${nombre}
+Precio: S/${precio}
+Entrega: ${entrega}
+Ayuno: ${ayuno}
+Preparación: ${preparacion}
+`;
+
+navigator.clipboard.writeText(texto);
+
+alert("Información copiada para enviar por WhatsApp");
+
+}

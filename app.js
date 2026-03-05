@@ -14,23 +14,26 @@ const database = firebase.database();
 const buscador = document.getElementById("buscador");
 const resultados = document.getElementById("resultados");
 
-buscador.addEventListener("input", ()=>{
-    const texto = buscador.value.toLowerCase();
-    database.ref("estudios").once("value", snap=>{
-        resultados.innerHTML="";
-        snap.forEach(child=>{
-            const e = child.val();
-            if(e.nombre.toLowerCase().includes(texto)){
-                resultados.innerHTML += `
-                <div class="card">
-                  <h3>${e.nombre}</h3>
-                  <p class="precio">Precio: S/ ${e.precio}</p>
-                  <p>Entrega: ${e.tiempo_entrega}</p>
-                  <p>Ayuno: ${e.ayuno}</p>
-                  <p>Preparación: ${e.preparacion}</p>
-                  <p class="estado">Estado: ${e.reactivo ? "Disponible" : "Sin reactivo"}</p>
-                </div>`;
-            }
-        });
+buscador.addEventListener("input", () => {
+  const texto = buscador.value.toLowerCase();
+
+  database.ref("estudios").once("value", snap => {
+    resultados.innerHTML = "";
+
+    snap.forEach(child => {
+      const e = child.val();
+
+      if (e.nombre.toLowerCase().includes(texto)) {
+        resultados.innerHTML += `
+        <div class="card">
+          <h3>${e.nombre}</h3>
+          <p class="precio">Precio: S/ ${e.precio}</p>
+          <p>Entrega: ${e.tiempo_entrega}</p>
+          <p>Ayuno: ${e.ayuno}</p>
+          <p>Preparación: ${e.preparacion}</p>
+          <p class="estado">Estado: ${e.reactivo ? "Disponible" : "Sin reactivo"}</p>
+        </div>`;
+      }
     });
+  });
 });

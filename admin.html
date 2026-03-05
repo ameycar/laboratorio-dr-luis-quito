@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Administrador Laboratorio</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6f9;
+padding:20px;
+}
+
+h2{
+text-align:center;
+}
+
+form{
+background:white;
+padding:20px;
+border-radius:8px;
+max-width:500px;
+margin:auto;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+input,select{
+width:100%;
+padding:10px;
+margin:6px 0;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+button{
+background:#007bff;
+color:white;
+border:none;
+padding:10px;
+border-radius:6px;
+cursor:pointer;
+width:100%;
+}
+
+button:hover{
+background:#0056b3;
+}
+
+</style>
+</head>
+
+<body>
+
+<h2>Administrador de Estudios</h2>
+
+<form id="form">
+
+<input type="text" id="nombre" placeholder="Nombre del estudio" required>
+
+<input type="number" id="precio" placeholder="Precio">
+
+<input type="text" id="tiempo" placeholder="Tiempo de entrega">
+
+<input type="text" id="ayuno" placeholder="Ayuno">
+
+<input type="text" id="preparacion" placeholder="Preparación">
+
+<select id="reactivo">
+<option value="true">Disponible</option>
+<option value="false">Sin reactivo</option>
+</select>
+
+<button type="submit">Guardar estudio</button>
+
+</form>
+
+<script type="module" src="admin.js"></script>
+
+</body>
+</html>

@@ -41,13 +41,14 @@ function mostrarEstudios(lista){
     lista.forEach(e => {
 
         resultados.innerHTML += `
-        <div class="card">
-            <h3>${e.nombre}</h3>
-            <p class="precio">Precio: S/ ${e.precio}</p>
-            <p>Entrega: ${e.tiempo_entrega}</p>
-            <p>Ayuno: ${e.ayuno}</p>
-            <p>Preparación: ${e.preparacion}</p>
-        </div>
+       <div class="card">
+    <h3>${e.nombre}</h3>
+    <p class="precio">Precio: S/ ${e.precio}</p>
+    <p>Entrega: ${e.tiempo_entrega}</p>
+    <p>Ayuno: ${e.ayuno}</p>
+    <p>Preparación: ${e.preparacion}</p>
+    <p class="estado">${e.reactivo ? "🟢 Disponible" : "🔴 Sin reactivo"}</p>
+</div>
         `;
 
     });

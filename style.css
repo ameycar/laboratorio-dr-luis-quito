@@ -54,3 +54,16 @@ margin-top:8px;
 button:hover{
 background:#0066cc;
 }
+button{
+background:#0a84ff;
+color:white;
+border:none;
+padding:8px 12px;
+border-radius:6px;
+cursor:pointer;
+margin-top:8px;
+}
+
+a button{
+background:#25D366;
+}

@@ -20,11 +20,11 @@ form.addEventListener("submit",(e)=>{
 
 e.preventDefault();
 
-const nombre = document.getElementById("nombre").value;
-const precio = document.getElementById("precio").value;
-const tiempo = document.getElementById("tiempo").value;
-const ayuno = document.getElementById("ayuno").value;
-const preparacion = document.getElementById("preparacion").value;
+const nombre = document.getElementById("nombre").value.toUpperCase();
+const precio = document.getElementById("precio").value.toUpperCase();
+const tiempo = document.getElementById("tiempo").value.toUpperCase();
+const ayuno = document.getElementById("ayuno").value.toUpperCase();
+const preparacion = document.getElementById("preparacion").value.toUpperCase();
 const reactivo = document.getElementById("reactivo").value === "true";
 
 const id = nombre.toLowerCase().replaceAll(" ","_");

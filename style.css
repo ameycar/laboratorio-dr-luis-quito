@@ -67,3 +67,45 @@ margin-top:8px;
 a button{
 background:#25D366;
 }
+.card-estudio{
+border:1px solid #e2e2e2;
+border-radius:8px;
+padding:12px;
+margin-top:10px;
+background:white;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.estudio-info{
+display:flex;
+flex-direction:column;
+gap:3px;
+}
+
+.estudio-info b{
+font-size:15px;
+}
+
+.estudio-acciones{
+display:flex;
+gap:8px;
+}
+
+.btn-editar{
+background:#f4f4f4;
+border:none;
+padding:6px 10px;
+border-radius:5px;
+cursor:pointer;
+}
+
+.btn-eliminar{
+background:#ffe5e5;
+border:none;
+padding:6px 10px;
+border-radius:5px;
+cursor:pointer;
+color:#b00000;
+}

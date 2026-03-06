@@ -92,14 +92,18 @@ const id = child.key;
 
 lista.innerHTML += `
 
-<div style="border:1px solid #ccc;padding:10px;margin:10px;border-radius:6px">
+<div class="card-estudio">
 
-<b>${data.nombre}</b><br>
-Precio: S/ ${data.precio}<br>
-Entrega: ${data.tiempo_entrega}<br>
+<div class="estudio-info">
+<b>${data.nombre}</b>
+<span>Precio: S/ ${data.precio}</span>
+<span>Entrega: ${data.tiempo_entrega}</span>
+</div>
 
-<button onclick="editarEstudio('${id}')">✏️ Editar</button>
-<button onclick="eliminarEstudio('${id}')">🗑 Eliminar</button>
+<div class="estudio-acciones">
+<button class="btn-editar" onclick="editarEstudio('${id}')">✏️ Editar</button>
+<button class="btn-eliminar" onclick="eliminarEstudio('${id}')">🗑 Eliminar</button>
+</div>
 
 </div>
 

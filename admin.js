@@ -1,20 +1,26 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, set, get, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { getDatabase, ref, set, get, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDsBAnSCxSaYqP3NcbU41_2vUZAG-OcuCg",
-  authDomain: "laboratorio-dr-luis-quito.firebaseapp.com",
-  databaseURL: "https://laboratorio-dr-luis-quito-default-rtdb.firebaseio.com",
-  projectId: "laboratorio-dr-luis-quito",
-  storageBucket: "laboratorio-dr-luis-quito.firebasestorage.app",
-  messagingSenderId: "165604879420",
-  appId: "1:165604879420:web:659121228440c0a7f26739"
+apiKey: "AIzaSyDsBAnSCxSaYqP3NcbU41_2vUZAG-OcuCg",
+authDomain: "laboratorio-dr-luis-quito.firebaseapp.com",
+databaseURL: "https://laboratorio-dr-luis-quito-default-rtdb.firebaseio.com",
+projectId: "laboratorio-dr-luis-quito",
+storageBucket: "laboratorio-dr-luis-quito.appspot.com",
+messagingSenderId: "165604879420",
+appId: "1:165604879420:web:659121228440c0a7f26739"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 const form = document.getElementById("form");
+const lista = document.getElementById("listaEstudios");
+
+
+// =============================
+// GUARDAR ESTUDIO
+// =============================
 
 form.addEventListener("submit", async (e)=>{
 
@@ -34,54 +40,39 @@ const snapshot = await get(estudiosRef);
 let duplicado = false;
 
 snapshot.forEach(child=>{
-
 const e = child.val();
-
 if(e.nombre === nombre){
-
 duplicado = true;
-
 }
-
 });
 
 if(duplicado){
-
 alert("⚠️ ESTE ESTUDIO YA EXISTE");
-
 return;
-
 }
 
 const id = nombre.toLowerCase().replaceAll(" ","_");
 
 set(ref(db,"estudios/"+id),{
-
 nombre:nombre,
 precio:precio,
 tiempo_entrega:tiempo,
 ayuno:ayuno,
 preparacion:preparacion,
 reactivo:reactivo
-
 });
 
 alert("✅ Estudio guardado");
-
 form.reset();
 
 });
 
 
-// =======================================
-// NUEVA FUNCION: MOSTRAR ESTUDIOS
-// =======================================
-
-const lista = document.getElementById("listaEstudios");
+// =============================
+// MOSTRAR ESTUDIOS
+// =============================
 
 onValue(ref(db,"estudios"), (snapshot)=>{
-
-if(!lista) return;
 
 lista.innerHTML = "";
 
@@ -98,6 +89,7 @@ lista.innerHTML += `
 <b>${data.nombre}</b>
 <span>Precio: S/ ${data.precio}</span>
 <span>Entrega: ${data.tiempo_entrega}</span>
+<span>Estado: ${data.reactivo ? "Disponible" : "Sin reactivo"}</span>
 </div>
 
 <div class="estudio-acciones">
@@ -114,29 +106,26 @@ lista.innerHTML += `
 });
 
 
-// =======================================
-// ELIMINAR ESTUDIO
-// =======================================
+// =============================
+// ELIMINAR
+// =============================
 
 window.eliminarEstudio = function(id){
 
 if(confirm("¿Eliminar este estudio?")){
-
 remove(ref(db,"estudios/"+id));
-
 }
 
 }
 
 
-// =======================================
-// EDITAR ESTUDIO
-// =======================================
+// =============================
+// EDITAR
+// =============================
 
 window.editarEstudio = async function(id){
 
 const snapshot = await get(ref(db,"estudios/"+id));
-
 const data = snapshot.val();
 
 document.getElementById("nombre").value = data.nombre;
@@ -145,10 +134,6 @@ document.getElementById("tiempo").value = data.tiempo_entrega;
 document.getElementById("ayuno").value = data.ayuno;
 document.getElementById("preparacion").value = data.preparacion;
 
-if(data.reactivo){
-document.getElementById("reactivo").value = "true";
-}else{
-document.getElementById("reactivo").value = "false";
-}
+document.getElementById("reactivo").value = data.reactivo ? "true" : "false";
 
 }

@@ -33,11 +33,6 @@ messagingSenderId: "165604879420",
 appId: "1:165604879420:web:659121228440c0a7f26739"
 };
 
-
-// =============================
-// INICIALIZAR FIREBASE
-// =============================
-
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
@@ -52,7 +47,6 @@ onAuthStateChanged(auth,(user)=>{
 if(!user){
 
 alert("Debes iniciar sesión");
-
 window.location.href="login.html";
 
 }
@@ -82,43 +76,19 @@ const tiempo = document.getElementById("tiempo").value;
 const ayuno = document.getElementById("ayuno").value;
 const preparacion = document.getElementById("preparacion").value;
 const reactivo = document.getElementById("reactivo").value === "true";
-
-const estudiosRef = ref(db,"estudios");
-
-const snapshot = await get(estudiosRef);
-
-let duplicado = false;
-
-snapshot.forEach(child=>{
-
-const e = child.val();
-
-if(e.nombre === nombre){
-
-duplicado = true;
-
-}
-
-});
-
-if(duplicado){
-
-alert("⚠️ ESTE ESTUDIO YA EXISTE");
-
-return;
-
-}
+const envio_lab = document.getElementById("envio_lab").value;
 
 const id = nombre.toLowerCase().replaceAll(" ","_");
 
 set(ref(db,"estudios/"+id),{
 
-nombre:nombre,
-precio:precio,
+nombre,
+precio,
 tiempo_entrega:tiempo,
-ayuno:ayuno,
-preparacion:preparacion,
-reactivo:reactivo
+ayuno,
+preparacion,
+reactivo,
+envio_lab
 
 });
 
@@ -151,6 +121,7 @@ lista.innerHTML += `
 <span>Precio: S/ ${data.precio}</span>
 <span>Entrega: ${data.tiempo_entrega}</span>
 <span>Estado: ${data.reactivo ? "Disponible" : "Sin reactivo"}</span>
+<span>Envio Lab: ${data.envio_lab || "No"}</span>
 </div>
 
 <div class="estudio-acciones">
@@ -197,7 +168,69 @@ document.getElementById("precio").value = data.precio;
 document.getElementById("tiempo").value = data.tiempo_entrega;
 document.getElementById("ayuno").value = data.ayuno;
 document.getElementById("preparacion").value = data.preparacion;
+document.getElementById("reactivo").value = data.reactivo ? "true":"false";
+document.getElementById("envio_lab").value = data.envio_lab || "No";
 
-document.getElementById("reactivo").value = data.reactivo ? "true" : "false";
+}
+
+
+// =============================
+// IMPORTAR EXCEL
+// =============================
+
+window.importarExcel = function(){
+
+const archivo = document.getElementById("excelFile").files[0];
+
+if(!archivo){
+
+alert("Selecciona un archivo Excel");
+return;
+
+}
+
+const reader = new FileReader();
+
+reader.onload = function(e){
+
+const data = new Uint8Array(e.target.result);
+
+const workbook = XLSX.read(data,{type:"array"});
+
+const hoja = workbook.Sheets[workbook.SheetNames[0]];
+
+const estudios = XLSX.utils.sheet_to_json(hoja);
+
+let contador = 0;
+
+estudios.forEach(estudio=>{
+
+const nombre = estudio.nombre.toUpperCase();
+
+const id = nombre.toLowerCase().replaceAll(" ","_");
+
+set(ref(db,"estudios/"+id),{
+
+nombre:nombre,
+precio:estudio.precio || "",
+categoria:estudio.categoria || "",
+tiempo_entrega:estudio.tiempo_entrega || "",
+ayuno:estudio.ayuno || "",
+preparacion:estudio.preparacion || "",
+reactivo:estudio.reactivo === true || estudio.reactivo === "TRUE",
+envio_lab:estudio.envio_lab || "No"
+
+});
+
+contador++;
+
+});
+
+document.getElementById("estadoCarga").innerHTML =
+"✅ "+contador+" estudios cargados correctamente";
+
+};
+
+reader.readAsArrayBuffer(archivo);
 
 }

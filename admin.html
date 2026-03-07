@@ -2,6 +2,7 @@
 <html lang="es">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Administrador Laboratorio</title>
@@ -108,6 +109,15 @@ background:#ffe5e5;
 color:#b00000;
 }
 
+.importador{
+background:white;
+max-width:500px;
+margin:20px auto;
+padding:15px;
+border-radius:8px;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
 </style>
 </head>
 
@@ -136,13 +146,32 @@ PANEL DE CONTROL — LABORATORIO DR LUIS QUITO
 <option value="false">Sin reactivo</option>
 </select>
 
+<select id="envio_lab">
+<option value="No">Procesado en laboratorio</option>
+<option value="Si">Enviar a laboratorio externo</option>
+</select>
+
 <button type="submit">Guardar estudio</button>
 
 </form>
 
+<div class="importador">
+
+<h3>Carga masiva desde Excel</h3>
+
+<input type="file" id="excelFile" accept=".xlsx">
+
+<button onclick="importarExcel()">Importar estudios</button>
+
+<div id="estadoCarga"></div>
+
+</div>
+
 <h2>Estudios Registrados</h2>
 
 <div id="listaEstudios"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
 <script type="module" src="admin.js"></script>
 

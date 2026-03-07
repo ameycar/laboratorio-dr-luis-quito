@@ -1,5 +1,27 @@
+// =============================
+// FIREBASE IMPORTS
+// =============================
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, set, get, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+import { 
+getDatabase, 
+ref, 
+set, 
+get, 
+onValue, 
+remove 
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+
+// =============================
+// CONFIG FIREBASE
+// =============================
 
 const firebaseConfig = {
 apiKey: "AIzaSyDsBAnSCxSaYqP3NcbU41_2vUZAG-OcuCg",
@@ -11,8 +33,36 @@ messagingSenderId: "165604879420",
 appId: "1:165604879420:web:659121228440c0a7f26739"
 };
 
+
+// =============================
+// INICIALIZAR FIREBASE
+// =============================
+
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
+const auth = getAuth(app);
+
+
+// =============================
+// PROTEGER PANEL ADMIN
+// =============================
+
+onAuthStateChanged(auth,(user)=>{
+
+if(!user){
+
+alert("Debes iniciar sesión");
+
+window.location.href="login.html";
+
+}
+
+});
+
+
+// =============================
+// ELEMENTOS HTML
+// =============================
 
 const form = document.getElementById("form");
 const lista = document.getElementById("listaEstudios");
@@ -40,29 +90,40 @@ const snapshot = await get(estudiosRef);
 let duplicado = false;
 
 snapshot.forEach(child=>{
+
 const e = child.val();
+
 if(e.nombre === nombre){
+
 duplicado = true;
+
 }
+
 });
 
 if(duplicado){
+
 alert("⚠️ ESTE ESTUDIO YA EXISTE");
+
 return;
+
 }
 
 const id = nombre.toLowerCase().replaceAll(" ","_");
 
 set(ref(db,"estudios/"+id),{
+
 nombre:nombre,
 precio:precio,
 tiempo_entrega:tiempo,
 ayuno:ayuno,
 preparacion:preparacion,
 reactivo:reactivo
+
 });
 
 alert("✅ Estudio guardado");
+
 form.reset();
 
 });
@@ -107,25 +168,28 @@ lista.innerHTML += `
 
 
 // =============================
-// ELIMINAR
+// ELIMINAR ESTUDIO
 // =============================
 
 window.eliminarEstudio = function(id){
 
 if(confirm("¿Eliminar este estudio?")){
+
 remove(ref(db,"estudios/"+id));
+
 }
 
 }
 
 
 // =============================
-// EDITAR
+// EDITAR ESTUDIO
 // =============================
 
 window.editarEstudio = async function(id){
 
 const snapshot = await get(ref(db,"estudios/"+id));
+
 const data = snapshot.val();
 
 document.getElementById("nombre").value = data.nombre;

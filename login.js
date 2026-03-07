@@ -2,12 +2,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/fireba
 import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-
-apiKey: "TU API",
-authDomain: "TU AUTH",
-projectId: "TU PROJECT",
-appId: "TU APPID"
-
+apiKey: "AIzaSyDsBAnSCxSaYqP3NcbU41_2vUZAG-OcuCg",
+authDomain: "laboratorio-dr-luis-quito.firebaseapp.com",
+databaseURL: "https://laboratorio-dr-luis-quito-default-rtdb.firebaseio.com",
+projectId: "laboratorio-dr-luis-quito",
+storageBucket: "laboratorio-dr-luis-quito.appspot.com",
+messagingSenderId: "165604879420",
+appId: "1:165604879420:web:659121228440c0a7f26739"
 };
 
 const app = initializeApp(firebaseConfig);

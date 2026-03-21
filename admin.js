@@ -61,6 +61,7 @@ window.location.href="login.html";
 const form = document.getElementById("form");
 const lista = document.getElementById("listaEstudios");
 const buscador = document.getElementById("buscador");
+
 let textoBusqueda = "";
 
 
@@ -102,10 +103,10 @@ form.reset();
 
 
 // =============================
-// MOSTRAR ESTUDIOS
+// RENDER LISTA (CON FILTRO)
 // =============================
 
-onValue(ref(db,"estudios"), (snapshot)=>{
+function renderLista(snapshot){
 
 lista.innerHTML = "";
 
@@ -148,7 +149,17 @@ lista.innerHTML += `
 
 });
 
+}
+
+
+// =============================
+// MOSTRAR ESTUDIOS
+// =============================
+
+onValue(ref(db,"estudios"), (snapshot)=>{
+renderLista(snapshot);
 });
+
 
 // =============================
 // ELIMINAR ESTUDIO
@@ -246,6 +257,8 @@ document.getElementById("estadoCarga").innerHTML =
 reader.readAsArrayBuffer(archivo);
 
 }
+
+
 // =============================
 // BUSCADOR INTELIGENTE
 // =============================
@@ -254,9 +267,17 @@ buscador.addEventListener("input", (e)=>{
 
 textoBusqueda = normalizar(e.target.value);
 
-onValue(ref(db,"estudios"), ()=>{}); // refresca lista
+// 🔄 refrescar lista manualmente
+get(ref(db,"estudios")).then(snapshot=>{
+renderLista(snapshot);
+});
 
 });
+
+
+// =============================
+// NORMALIZAR TEXTO
+// =============================
 
 function normalizar(texto){
 

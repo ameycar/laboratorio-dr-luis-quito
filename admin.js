@@ -114,6 +114,17 @@ snapshot.forEach(child=>{
 const data = child.val();
 const id = child.key;
 
+// 🔍 FILTRO INTELIGENTE
+const contenido = normalizar(
+  data.nombre + " " +
+  data.precio + " " +
+  data.tiempo_entrega + " " +
+  data.envio_lab + " " +
+  (data.reactivo ? "disponible" : "sin reactivo")
+);
+
+if(!contenido.includes(textoBusqueda)) return;
+
 lista.innerHTML += `
 
 <div class="card-estudio">
@@ -138,7 +149,6 @@ lista.innerHTML += `
 });
 
 });
-
 
 // =============================
 // ELIMINAR ESTUDIO

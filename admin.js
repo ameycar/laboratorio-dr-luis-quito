@@ -60,6 +60,8 @@ window.location.href="login.html";
 
 const form = document.getElementById("form");
 const lista = document.getElementById("listaEstudios");
+const buscador = document.getElementById("buscador");
+let textoBusqueda = "";
 
 
 // =============================

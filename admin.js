@@ -246,3 +246,24 @@ document.getElementById("estadoCarga").innerHTML =
 reader.readAsArrayBuffer(archivo);
 
 }
+// =============================
+// BUSCADOR INTELIGENTE
+// =============================
+
+buscador.addEventListener("input", (e)=>{
+
+textoBusqueda = normalizar(e.target.value);
+
+onValue(ref(db,"estudios"), ()=>{}); // refresca lista
+
+});
+
+function normalizar(texto){
+
+return (texto || "")
+.toString()
+.toLowerCase()
+.normalize("NFD")
+.replace(/[\u0300-\u036f]/g,"");
+
+}
